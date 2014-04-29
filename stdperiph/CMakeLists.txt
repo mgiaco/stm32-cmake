@@ -72,6 +72,82 @@ IF(${STM32_FAMILY} STREQUAL "F1")
     )
     
     INSTALL(FILES ${STDPERIPH_HEADER_DIR}/misc.h RENAME stm32f10x_misc.h DESTINATION include/stm32f1)
+ELSEIF(${STM32_FAMILY} STREQUAL "F2")
+    IF(NOT STM32F2_StdPeriphLib_DIR)
+        SET(STM32F2_StdPeriphLib_DIR "/opt/STM32F2xx_StdPeriph_Lib_V1.1.0")
+        MESSAGE(STATUS "No STM32F2_StdPeriphLib_DIR specified, using default: " ${STM32F2_StdPeriphLib_DIR})
+    ENDIF()
+
+    INCLUDE_DIRECTORIES(
+        ${STM32F2_StdPeriphLib_DIR}/Libraries/STM32F2xx_StdPeriph_Driver/inc/
+    )
+    
+    SET(STDPERIPH_SOURCE_DIR ${STM32F2_StdPeriphLib_DIR}/Libraries/STM32F2xx_StdPeriph_Driver/src)
+    SET(STDPERIPH_HEADER_DIR ${STM32F2_StdPeriphLib_DIR}/Libraries/STM32F2xx_StdPeriph_Driver/inc)
+    
+    SET(STDPERIPH_HEADERS
+        ${STDPERIPH_HEADER_DIR}/stm32f2xx_adc.h
+        ${STDPERIPH_HEADER_DIR}/stm32f2xx_can.h
+        ${STDPERIPH_HEADER_DIR}/stm32f2xx_crc.h
+        ${STDPERIPH_HEADER_DIR}/stm32f2xx_cryp.h
+        ${STDPERIPH_HEADER_DIR}/stm32f2xx_dac.h
+        ${STDPERIPH_HEADER_DIR}/stm32f2xx_dbgmcu.h
+        ${STDPERIPH_HEADER_DIR}/stm32f2xx_dcmi.h
+        ${STDPERIPH_HEADER_DIR}/stm32f2xx_dma.h
+        ${STDPERIPH_HEADER_DIR}/stm32f2xx_exti.h
+        ${STDPERIPH_HEADER_DIR}/stm32f2xx_flash.h
+        ${STDPERIPH_HEADER_DIR}/stm32f2xx_fsmc.h
+        ${STDPERIPH_HEADER_DIR}/stm32f2xx_gpio.h
+        ${STDPERIPH_HEADER_DIR}/stm32f2xx_hash.h
+        ${STDPERIPH_HEADER_DIR}/stm32f2xx_i2c.h
+        ${STDPERIPH_HEADER_DIR}/stm32f2xx_iwdg.h
+        ${STDPERIPH_HEADER_DIR}/stm32f2xx_pwr.h
+        ${STDPERIPH_HEADER_DIR}/stm32f2xx_rcc.h
+        ${STDPERIPH_HEADER_DIR}/stm32f2xx_rng.h
+        ${STDPERIPH_HEADER_DIR}/stm32f2xx_rtc.h
+        ${STDPERIPH_HEADER_DIR}/stm32f2xx_sdio.h
+        ${STDPERIPH_HEADER_DIR}/stm32f2xx_spi.h
+        ${STDPERIPH_HEADER_DIR}/stm32f2xx_syscfg.h
+        ${STDPERIPH_HEADER_DIR}/stm32f2xx_tim.h
+        ${STDPERIPH_HEADER_DIR}/stm32f2xx_usart.h
+        ${STDPERIPH_HEADER_DIR}/stm32f2xx_wwdg.h
+    )
+    
+    SET(STDPERIPH_SOURCES
+        ${STDPERIPH_SOURCE_DIR}/misc.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_adc.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_can.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_crc.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_cryp.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_cryp_aes.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_cryp_des.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_cryp_tdes.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_dac.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_dbgmcu.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_dcmi.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_dma.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_exti.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_flash.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_gpio.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_hash.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_hash_md5.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_hash_sha1.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_i2c.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_iwdg.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_pwr.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_rcc.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_rng.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_rtc.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_sdio.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_spi.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_syscfg.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_tim.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_usart.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_wwdg.c
+    )
+    
+    INSTALL(FILES ${STDPERIPH_HEADER_DIR}/misc.h RENAME stm32f2xx_misc.h DESTINATION include/stm32f2)
+
 ELSEIF(${STM32_FAMILY} STREQUAL "F4")
     IF(NOT STM32F4_StdPeriphLib_DIR)
         SET(STM32F4_StdPeriphLib_DIR "/opt/STM32F4xx_DSP_StdPeriph_Lib_V1.3.0")

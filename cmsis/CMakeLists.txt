@@ -41,6 +41,9 @@ ELSEIF(${STM32_FAMILY} STREQUAL "F2")
         ${STM32F2_StdPeriphLib_DIR}/Libraries/CMSIS/Device/ST/STM32F2xx/Include/system_stm32f2xx.h
         ${STM32F2_StdPeriphLib_DIR}/Libraries/CMSIS/Device/ST/STM32F2xx/Include/stm32f2xx.h
         ${STM32F2_StdPeriphLib_DIR}/Libraries/CMSIS/Include/core_cm3.h
+        ${STM32F2_StdPeriphLib_DIR}/Libraries/CMSIS/Include/arm_math.h
+        ${STM32F2_StdPeriphLib_DIR}/Libraries/CMSIS/Include/core_cmFunc.h
+        ${STM32F2_StdPeriphLib_DIR}/Libraries/CMSIS/Include/core_cmInstr.h
     )
     
     SET(CMSIS_SOURCES 
