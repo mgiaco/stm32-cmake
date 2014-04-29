@@ -7,7 +7,80 @@ IF(NOT DEFINED CMSIS_INCLUDE_DIR)
     FIND_PACKAGE(CMSIS REQUIRED)
 ENDIF()
 
-IF(${STM32_FAMILY} STREQUAL "F1")
+IF(${STM32_FAMILY} STREQUAL "F0")
+    IF(NOT STM32F0_StdPeriphLib_DIR)
+        SET(STM32F0_StdPeriphLib_DIR "/opt/STM32F0xx_StdPeriph_Lib_V1.3.1")
+        MESSAGE(STATUS "No STM32F0_StdPeriphLib_DIR specified, using default: " ${STM32F0_StdPeriphLib_DIR})
+    ENDIF()
+
+    INCLUDE_DIRECTORIES(
+        ${STM32F0_StdPeriphLib_DIR}/Libraries/STM32F0xx_StdPeriph_Driver/inc/
+    )
+    
+    SET(STDPERIPH_SOURCE_DIR ${STM32F0_StdPeriphLib_DIR}/Libraries/STM32F0xx_StdPeriph_Driver/src)
+    SET(STDPERIPH_HEADER_DIR ${STM32F0_StdPeriphLib_DIR}/Libraries/STM32F0xx_StdPeriph_Driver/inc)
+    
+    SET(STDPERIPH_HEADERS 
+        ${STDPERIPH_HEADER_DIR}/stm32f0xx_adc.h
+        ${STDPERIPH_HEADER_DIR}/stm32f0xx_can.h
+        ${STDPERIPH_HEADER_DIR}/stm32f0xx_cec.h
+        ${STDPERIPH_HEADER_DIR}/stm32f0xx_comp.h
+        ${STDPERIPH_HEADER_DIR}/stm32f0xx_crc.h
+        ${STDPERIPH_HEADER_DIR}/stm32f0xx_crs.h
+        ${STDPERIPH_HEADER_DIR}/stm32f0xx_dac.h
+        ${STDPERIPH_HEADER_DIR}/stm32f0xx_dbgmcu.h
+        ${STDPERIPH_HEADER_DIR}/stm32f0xx_dma.h
+        ${STDPERIPH_HEADER_DIR}/stm32f0xx_exti.h
+        ${STDPERIPH_HEADER_DIR}/stm32f0xx_flash.h
+        ${STDPERIPH_HEADER_DIR}/stm32f0xx_gpio.h
+        ${STDPERIPH_HEADER_DIR}/stm32f0xx_i2c.h
+        ${STDPERIPH_HEADER_DIR}/stm32f0xx_iwdg.h
+        ${STDPERIPH_HEADER_DIR}/stm32f0xx_misc.h
+        ${STDPERIPH_HEADER_DIR}/stm32f0xx_pwr.h
+        ${STDPERIPH_HEADER_DIR}/stm32f0xx_rcc.h
+        ${STDPERIPH_HEADER_DIR}/stm32f0xx_rtc.h
+        ${STDPERIPH_HEADER_DIR}/stm32f0xx_spi.h
+        ${STDPERIPH_HEADER_DIR}/stm32f0xx_syscfg.h
+        ${STDPERIPH_HEADER_DIR}/stm32f0xx_tim.h
+        ${STDPERIPH_HEADER_DIR}/stm32f0xx_usart.h
+        ${STDPERIPH_HEADER_DIR}/stm32f0xx_wwdg.h
+    )
+    
+    SET(STDPERIPH_SOURCES
+        ${STDPERIPH_SOURCE_DIR}/stm32f0xx_adc.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f0xx_can.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f0xx_cec.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f0xx_comp.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f0xx_crc.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f0xx_dbgmcu.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f0xx_dma.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f0xx_exti.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f0xx_flash.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f0xx_gpio.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f0xx_i2c.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f0xx_iwdg.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f0xx_misc.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f0xx_pwr.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f0xx_rcc.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f0xx_rtc.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f0xx_spi.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f0xx_syscfg.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f0xx_tim.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f0xx_usart.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f0xx_wwdg.c
+    )
+
+    SET(STDPERIPH_SOURCES_051
+        ${STDPERIPH_SOURCE_DIR}/stm32f0xx_dac.c
+    )
+    SET(STDPERIPH_SOURCES_071
+        ${STDPERIPH_SOURCE_DIR}/stm32f0xx_dac.c
+    )
+    SET(STDPERIPH_SOURCES_072
+        ${STDPERIPH_SOURCE_DIR}/stm32f0xx_dac.c
+    )
+    
+ELSEIF(${STM32_FAMILY} STREQUAL "F1")
     IF(NOT STM32F1_StdPeriphLib_DIR)
         SET(STM32F1_StdPeriphLib_DIR "/opt/STM32F10x_StdPeriph_Lib_V3.5.0")
         MESSAGE(STATUS "No STM32F1_StdPeriphLib_DIR specified, using default: " ${STM32F1_StdPeriphLib_DIR})

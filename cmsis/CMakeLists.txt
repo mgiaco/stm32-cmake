@@ -3,7 +3,33 @@ PROJECT(stm32cmsis)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 ENABLE_LANGUAGE(ASM)
 
-IF(${STM32_FAMILY} STREQUAL "F1")
+IF(${STM32_FAMILY} STREQUAL "F0")
+    IF(NOT STM32F0_StdPeriphLib_DIR)
+        SET(STM32F0_StdPeriphLib_DIR "/opt/STM32F0xx_StdPeriph_Lib_V1.3.1")
+        MESSAGE(STATUS "No STM32F0_StdPeriphLib_DIR specified, using default: " ${STM32F0_StdPeriphLib_DIR})
+    ENDIF()
+    
+    INCLUDE_DIRECTORIES(
+        ${STM32F0_StdPeriphLib_DIR}/Libraries/CMSIS/Device/ST/STM32F0xx/Include/
+        ${STM32F0_StdPeriphLib_DIR}/Libraries/CMSIS/Include/
+    )
+    
+    SET(CMSIS_HEADERS 
+        ${STM32F0_StdPeriphLib_DIR}/Libraries/CMSIS/Device/ST/STM32F0xx/Include/system_stm32f0xx.h
+        ${STM32F0_StdPeriphLib_DIR}/Libraries/CMSIS/Device/ST/STM32F0xx/Include/stm32f0xx.h
+        ${STM32F0_StdPeriphLib_DIR}/Libraries/CMSIS/Include/core_cm0.h
+        ${STM32F0_StdPeriphLib_DIR}/Libraries/CMSIS/Include/arm_math.h
+        ${STM32F0_StdPeriphLib_DIR}/Libraries/CMSIS/Include/core_cmFunc.h
+        ${STM32F0_StdPeriphLib_DIR}/Libraries/CMSIS/Include/core_cmInstr.h
+    )
+    
+    SET(CMSIS_SOURCES 
+        ${STM32F0_StdPeriphLib_DIR}/Libraries/CMSIS/Device/ST/STM32F0xx/Source/Templates/system_stm32f0xx.c
+    )
+    
+    SET(CMSIS_LINKER_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/stm32f0_flash.ld.in)
+    SET(STARTUP_PREFIX ${STM32F0_StdPeriphLib_DIR}/Libraries/CMSIS/Device/ST/STM32F0xx/Source/Templates/gcc_ride7/startup_stm32f)
+ELSEIF(${STM32_FAMILY} STREQUAL "F1")
     IF(NOT STM32F1_StdPeriphLib_DIR)
         SET(STM32F1_StdPeriphLib_DIR "/opt/STM32F10x_StdPeriph_Lib_V3.5.0")
         MESSAGE(STATUS "No STM32F1_StdPeriphLib_DIR specified, using default: " ${STM32F1_StdPeriphLib_DIR})

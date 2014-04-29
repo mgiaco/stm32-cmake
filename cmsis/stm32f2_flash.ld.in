@@ -1,5 +1,5 @@
 /*
-Linker script for STM32F2xx_1024K_128K
+Linker script for STM32F2xx 
 */
 
 /* include the common STM32F2xx sub-script */
