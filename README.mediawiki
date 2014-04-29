@@ -1,10 +1,11 @@
 == About ==
-This project is used to develop applications for stm32 - ST's ARM Cortex-M3 MCUs, using cmake, GCC, newlib (libc) and STM32F10x Standard Peripherals Library.
+This project is used to develop applications for stm32 - ST's ARM Cortex-M3 MCUs, using cmake, GCC, newlib (libc) and STM32Fxxx Standard Peripherals Library.
 
 Requirements:
 * cmake >= 2.8
 * GCC toolchain with newlib.
 * STM32F10x Standard Peripherals Library for STM32F1 family
+* STM32F2xx Standard Peripherals Library for STM32F2 family
 * STM32F4 DSP and Standard Peripherals Library for STM32F4 family
 Project contains:
 * CMake common toolchain file, that configures cmake to use arm toolchain.
@@ -21,11 +22,12 @@ First of all you need to configure toolchain and libraries, you can do this by e
 Variables for toolchain:
 * TOOLCHAIN_PREFIX - where toolchain is located, '''default''': /usr
 * TARGET_TRIPLET - toolchain target triplet, '''default''': arm-none-eabi
-* STM32_FAMILY - STM32 family (F0, F1, F4, etc.) currently, F1 and F4 family are supported.
+* STM32_FAMILY - STM32 family (F0, F1, F4, etc.) currently, F1, F2 and F4 family are supported.
 '''Note:''' If STM32_CHIP variable is set, STM32_FAMILY is optional.
 
 Variables for CMSIS and StdPeriphLib:
 * STM32F1_StdPeriphLib_DIR - path to STM32F10x Standard Peripherals Library '''default''': /opt/STM32F10x_StdPeriph_Lib_V3.5.0
+* STM32F2_StdPeriphLib_DIR - path to STM32F2xx Standard Peripherals Library '''default''': /opt/STM32F2xx_StdPeriph_Lib_V1.1.0
 * STM32F4_StdPeriphLib_DIR - path to STM32F4 DSP and Standard Peripherals Library '''default''': /opt/STM32F4xx_DSP_StdPeriph_Lib_V1.3.0
 * USE_ASSERT - Use internal asserts in Standard Peripherals Library.
 
@@ -36,11 +38,12 @@ In cmsis folder:
 In stdperiph folder
  cmake -DCMAKE_TOOLCHAIN_FILE=../gcc_stm32.cmake -DCMAKE_MODULE_PATH=<path_to_cmake_folder_of_this_project>/Modules -DSTM32_FAMILY=F1 -DCMAKE_INSTALL_PREFIX=<path_to_toolchain>/arm-none-eabi/ -DCMAKE_BUILD_TYPE=Release
  make && make install
+'''Note:''' For building for STM32F2 family, change -DSTM32_FAMILY=F1 to -DSTM32_FAMILY=F2
 '''Note:''' For building for STM32F4 family, change -DSTM32_FAMILY=F1 to -DSTM32_FAMILY=F4
 
 '''Note:''' You can use different CMAKE_INSTALL_PREFIX, but than you'll have to configure cmake search paths when using cmake modules. You may specify an additional search path with -DEXTRA_FIND_PATH=<path-to-search>
 
-'''Note:''' To prevent header collision file "misc.h" from Standard Peripherals Library will be installed as stm32f10x_misc.h / stm32f4xx_misc.h
+'''Note:''' To prevent header collision file "misc.h" from Standard Peripherals Library will be installed as stm32f10x_misc.h / stm32f2xx_misc.h / stm32f4xx_misc.h
 
 == Usage ==
 After building you need to copy cmake modules in cmake's modules path, or just set CMAKE_MODULE_PATH in project. 

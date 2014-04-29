@@ -24,6 +24,35 @@ IF(STM32_FAMILY STREQUAL "F1")
         stm32f10x_wwdg.h
         stm32f10x_misc.h
     )
+IF(STM32_FAMILY STREQUAL "F2")
+    SET(STDPERIPH_HEADERS
+        stm32f2xx_adc.h
+        stm32f2xx_can.h
+        stm32f2xx_crc.h
+        stm32f2xx_cryp.h
+        stm32f2xx_dac.h
+        stm32f2xx_dbgmcu.h
+        stm32f2xx_dcmi.h
+        stm32f2xx_dma.h
+        stm32f2xx_exti.h
+        stm32f2xx_flash.h
+        stm32f2xx_fsmc.h
+        stm32f2xx_gpio.h
+        stm32f2xx_hash.h
+        stm32f2xx_i2c.h
+        stm32f2xx_iwdg.h
+        stm32f2xx_pwr.h
+        stm32f2xx_rcc.h
+        stm32f2xx_rng.h
+        stm32f2xx_rtc.h
+        stm32f2xx_sdio.h
+        stm32f2xx_spi.h
+        stm32f2xx_syscfg.h
+        stm32f2xx_tim.h
+        stm32f2xx_usart.h
+        stm32f2xx_wwdg.h
+        misc.h
+    )
 ELSEIF(STM32_FAMILY STREQUAL "F4")
     SET(STDPERIPH_HEADERS
         stm32f4xx_adc.h
