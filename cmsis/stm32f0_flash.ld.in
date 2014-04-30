@@ -15,17 +15,17 @@
 ENTRY(Reset_Handler)
 
 /* Highest address of the user mode stack */
-_estack = ${STACK_ADDRESS};    /* end of RAM */
+_estack = ${STM32_STACK_ADDRESS};
 
 /* Generate a link error if heap and stack don't fit into RAM */
-_Min_Heap_Size = ${MIN_HEAP_SIZE};      /* required amount of heap  */
-_Min_Stack_Size = ${MIN_STACK_SIZE}; /* required amount of stack */
+_Min_Heap_Size = ${STM32_MIN_HEAP_SIZE};      /* required amount of heap  */
+_Min_Stack_Size = ${STM32_MIN_STACK_SIZE}; /* required amount of stack */
 
 /* Specify the memory areas */
 MEMORY
 {
-  FLASH (rx)      : ORIGIN = ${FLASH_ORIGIN}, LENGTH = ${FLASH_SIZE}
-  RAM (xrw)       : ORIGIN = ${RAM_ORIGIN}, LENGTH = ${RAM_SIZE}
+  FLASH (rx)      : ORIGIN = ${STM32_FLASH_ORIGIN}, LENGTH = ${STM32_FLASH_SIZE}
+  RAM (xrw)       : ORIGIN = ${STM32_RAM_ORIGIN}, LENGTH = ${STM32_RAM_SIZE}
 }
 
 /* Define output sections */
@@ -64,7 +64,7 @@ SECTIONS
       *(.ARM.exidx*)
       __exidx_end = .;
     } >FLASH
-
+    
   .ARM.attributes : { *(.ARM.attributes) } > FLASH
 
   .preinit_array     :
