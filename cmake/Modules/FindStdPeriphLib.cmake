@@ -1,4 +1,28 @@
-IF(STM32_FAMILY STREQUAL "F1")
+IF(STM32_FAMILY STREQUAL "F0")
+    SET(STDPERIPH_HEADERS
+        stm32f0xx_adc.h
+        stm32f0xx_can.h
+        stm32f0xx_cec.h
+        stm32f0xx_crc.h
+        stm32f0xx_dac.h
+        stm32f0xx_dbgmcu.h
+        stm32f0xx_dma.h
+        stm32f0xx_exti.h
+        stm32f0xx_flash.h
+        stm32f0xx_gpio.h
+        stm32f0xx_i2c.h
+        stm32f0xx_iwdg.h
+        stm32f0xx_pwr.h
+        stm32f0xx_rcc.h
+        stm32f0xx_rtc.h
+        stm32f0xx_sdio.h
+        stm32f0xx_spi.h
+        stm32f0xx_tim.h
+        stm32f0xx_usart.h
+        stm32f0xx_wwdg.h
+        stm32f0xx_misc.h
+    )
+ELSEIF(STM32_FAMILY STREQUAL "F1")
     SET(STDPERIPH_HEADERS
         stm32f10x_adc.h
         stm32f10x_bkp.h
@@ -24,7 +48,7 @@ IF(STM32_FAMILY STREQUAL "F1")
         stm32f10x_wwdg.h
         stm32f10x_misc.h
     )
-IF(STM32_FAMILY STREQUAL "F2")
+ELSEIF(STM32_FAMILY STREQUAL "F2")
     SET(STDPERIPH_HEADERS
         stm32f2xx_adc.h
         stm32f2xx_can.h
@@ -115,5 +139,5 @@ INCLUDE(FindPackageHandleStandardArgs)
 
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(StdPeriphLib DEFAULT_MSG StdPeriphLib_LIBRARIES StdPeriphLib_INCLUDE_DIR) 
 
-SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_STDPERIPH_DRIVER")
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUSE_STDPERIPH_DRIVER")
+# SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_STDPERIPH_DRIVER")
+# SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUSE_STDPERIPH_DRIVER")
