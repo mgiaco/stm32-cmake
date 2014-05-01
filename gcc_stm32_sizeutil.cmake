@@ -85,3 +85,23 @@ MACRO(CONVERT_TOHEX out)  # args: out [val]
       MESSAGE(FATAL "Wrong arguments to CONVERT_TOHEX")
    ENDIF()
 ENDMACRO(CONVERT_TOHEX)
+
+#
+# Converts given memory size (ex. 64K, 1M, 0x20K, etc) to
+# hexadecimal bytes value (ex. 0x10000, 0x100000, 0x8000).
+#
+MACRO(STM32_MEMSIZE_TO_HEX_BYTES MS BYTES)
+    STRING(REGEX REPLACE "^(.+)[kK]$" "\\1" KILOBYTES ${MS})
+    STRING(REGEX REPLACE "^(.+)[mM]$" "\\1" MEGABYTES ${MS})
+    IF(KILOBYTES)
+        CONVERT_TODEC(CALC_TMP ${KILOBYTES})
+        MATH(EXPR CALC_TMP "${CALC_TMP} * 4")
+        CONVERT_TOHEX(CALC_TMP)
+        SET(${BYTES} "${CALC_TMP}00")
+    ELSEIF(MEGABYTES)
+        CONVERT_TOHEX(CALC_TMP ${MEGABYTES})
+        SET(${BYTES} "${CALC_TMP}00000")
+    ELSE()
+        CONVERT_TOHEX(${BYTES} ${MS})
+    ENDIF()
+ENDMACRO()

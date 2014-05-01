@@ -12,20 +12,8 @@ Default linker script for STM32F4xx_1024K_192K
 These are used by the startup in order to allocate stacks for the different modes.
 */
 
-__Stack_Size = 1024 ;
-
-PROVIDE ( _Stack_Size = __Stack_Size ) ;
-
-__Stack_Init = _estack  - __Stack_Size ;
-
-/*"PROVIDE" allows to easily override these values from an object file or the commmand line.*/
-PROVIDE ( _Stack_Init = __Stack_Init ) ;
-
-/*
-There will be a link error if there is not this amount of RAM free at the end.
-*/
-_Minimum_Stack_Size = ${STM32_MIN_STACK_SIZE} ;
-
+_Min_Heap_Size = ${STM32_MIN_HEAP_SIZE};      /* required amount of heap  */
+_Min_Stack_Size = ${STM32_MIN_STACK_SIZE}; /* required amount of stack */
 
 /* include the memory spaces definitions sub-script */
 /*
@@ -41,10 +29,8 @@ MEMORY
   MEMORY_ARRAY (xrw)  : ORIGIN = 0x20002000, LENGTH = 32
 }
 
-/* higher address of the user mode stack (end of 128K RAM on AHB bus)*/
-_estack = ${STM32_STACK_ADDRESS};
-
-
+/* Highest address of the user mode stack */
+_estack = ORIGIN(RAM) + LENGTH(RAM); /* end of RAM */
 
 /* include the sections management sub-script for FLASH mode */
 
@@ -138,13 +124,10 @@ SECTIONS
      */
     ._usrstack :
     {
-	    . = ALIGN(4);
-        _susrstack = . ;
-        
-        . = . + _Minimum_Stack_Size ;
-        
-	    . = ALIGN(4);
-        _eusrstack = . ;
+        . = ALIGN(4);
+        . = . + _Min_Heap_Size;
+        . = . + _Min_Stack_Size;
+        . = ALIGN(4);
     } >RAM
     
     /* after that it's only debugging information. */
