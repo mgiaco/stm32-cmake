@@ -113,3 +113,11 @@ This package is successfully used to build STM32 applications under Windows usin
 
 * And now you go (again, use proper paths):
  "C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -G "Eclipse CDT4 - MinGW Makefiles" -C ../../build/build_settings -DCMAKE_BUILD_TYPE=Debug ../source/
+
+=== Rebuilding CMSIS library ===
+
+CMSIS headers contains HSE_VALUE macro which should be redefined if your chip has nonstandard oscillator connected. CMSIS source depends on this value
+and thus should be rebuilt. To achieve this you can use ''''REBUILD_CMSIS_LIBRARY()'''' macro in your CMakeLists.txt:
+ FIND_PACKAGE(CMSIS REQUIRED)
+ REBUILD_CMSIS_LIBRARY()  # This line should be added
+ TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME} ${CMSIS_LIBRARIES})
