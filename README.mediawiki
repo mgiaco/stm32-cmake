@@ -97,25 +97,19 @@ Next cmake variables are useful for linker tuning:
 
 This package is successfully used to build STM32 applications under Windows using freely available Sourcery_CodeBench_Lite_for_ARM_EABI toolchain. The recommended setup is:
 
-* Install [Sourcery_Codebench_Lite http://www.mentor.com/embedded-software/sourcery-tools/sourcery-codebench/overview]
+* Install [http://www.mentor.com/embedded-software/sourcery-tools/sourcery-codebench/overview Sourcery Codebench Lite]
 * Install minimal MinGW to have properly functioning 'make.exe'
 * Prepare initial CMake cache contents ''build_settings'' setting paths proper for your installation:
-{{{
-SET(CMAKE_MAKE_PROGRAM c:/MinGW/bin/mingw32-make.exe CACHE FILEPATH "Make program")
-SET(CMAKE_TOOLCHAIN_FILE d:/Projects/lib/stm32-cmake/gcc_stm32.cmake CACHE FILEPATH "Toolchain file")
-SET(TOOLCHAIN_PREFIX "c:/MentorGraphics/Sourcery_CodeBench_Lite_for_ARM_EABI" CACHE PATH "Toolchain prefix")
+ SET(CMAKE_MAKE_PROGRAM c:/MinGW/bin/mingw32-make.exe CACHE FILEPATH "Make program")
+ SET(CMAKE_TOOLCHAIN_FILE d:/Projects/lib/stm32-cmake/gcc_stm32.cmake CACHE FILEPATH "Toolchain file")
+ SET(TOOLCHAIN_PREFIX "c:/MentorGraphics/Sourcery_CodeBench_Lite_for_ARM_EABI" CACHE PATH "Toolchain prefix")
+ SET(STM32_CHIP "STM32F030R8" CACHE STRING "stm32 chip")
+ SET(STM32F2_StdPeriphLib_DIR "d:/Projects/lib/STM32F2xx_StdPeriph_Lib_V1.1.0" CACHE PATH "StdPeriph path")
+ SET(STM32F0_StdPeriphLib_DIR "d:/Projects/lib/STM32F0xx_StdPeriph_Lib_V1.3.1" CACHE PATH "StdPeriph path")
+ SET(CMAKE_INSTALL_PREFIX "d:/Projects/lib/bin" CACHE PATH "Install prefix")
+ SET(CMAKE_MODULE_PATH "d:/Projects/lib/stm32-cmake/cmake/Modules" CACHE PATH "CMake modules path")
+ SET(EXTRA_FIND_PATH "${CMAKE_INSTALL_PREFIX}" CACHE PATH "Build root path")
+ SET(CMAKE_ECLIPSE_VERSION "4.3" CACHE STRING "Eclipse version")
 
-SET(STM32_CHIP "STM32F030R8" CACHE STRING "stm32 chip")
-
-SET(STM32F2_StdPeriphLib_DIR "d:/Projects/lib/STM32F2xx_StdPeriph_Lib_V1.1.0" CACHE PATH "StdPeriph path")
-SET(STM32F0_StdPeriphLib_DIR "d:/Projects/lib/STM32F0xx_StdPeriph_Lib_V1.3.1" CACHE PATH "StdPeriph path")
-
-SET(CMAKE_INSTALL_PREFIX "d:/Projects/lib/bin" CACHE PATH "Install prefix")
-SET(CMAKE_MODULE_PATH "d:/Projects/lib/stm32-cmake/cmake/Modules" CACHE PATH "CMake modules path")
-SET(EXTRA_FIND_PATH "${CMAKE_INSTALL_PREFIX}" CACHE PATH "Build root path")
-SET(CMAKE_ECLIPSE_VERSION "4.3" CACHE STRING "Eclipse version")
-}}}
 * And now you go (again, use proper paths):
-{{{
-"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -G "Eclipse CDT4 - MinGW Makefiles" -C ../../build/build_settings -DCMAKE_BUILD_TYPE=Debug ../source/
-}}}
+ "C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -G "Eclipse CDT4 - MinGW Makefiles" -C ../../build/build_settings -DCMAKE_BUILD_TYPE=Debug ../source/
