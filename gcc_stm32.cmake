@@ -1,5 +1,6 @@
 INCLUDE(CMakeForceCompiler)
 INCLUDE(${CMAKE_CURRENT_LIST_DIR}/gcc_stm32_sizeutil.cmake)
+INCLUDE(${CMAKE_CURRENT_LIST_DIR}/gcc_stm32_common.cmake)
 
 SET(STM32_SUPPORTED_FAMILIES F0 F1 F2 F4 CACHE INTERNAL "stm32 supported families")
 
