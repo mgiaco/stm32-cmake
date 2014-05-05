@@ -4,6 +4,7 @@ This project is used to develop applications for stm32 - ST's ARM Cortex-M3 MCUs
 Requirements:
 * cmake >= 2.8
 * GCC toolchain with newlib.
+* STM32F0xx Standard Peripherals Library for STM32F0 family
 * STM32F10x Standard Peripherals Library for STM32F1 family
 * STM32F2xx Standard Peripherals Library for STM32F2 family
 * STM32F4 DSP and Standard Peripherals Library for STM32F4 family
@@ -22,10 +23,11 @@ First of all you need to configure toolchain and libraries, you can do this by e
 Variables for toolchain:
 * TOOLCHAIN_PREFIX - where toolchain is located, '''default''': /usr
 * TARGET_TRIPLET - toolchain target triplet, '''default''': arm-none-eabi
-* STM32_FAMILY - STM32 family (F0, F1, F4, etc.) currently, F1, F2 and F4 family are supported.
+* STM32_FAMILY - STM32 family (F0, F1, F4, etc.) currently, F0, F1, F2 and F4 family are supported.
 '''Note:''' If STM32_CHIP variable is set, STM32_FAMILY is optional.
 
 Variables for CMSIS and StdPeriphLib:
+* STM32F0_StdPeriphLib_DIR - path to STM32F0xx Standard Peripherals Library '''default''': /opt/STM32F0xx_StdPeriph_Lib_V1.3.1
 * STM32F1_StdPeriphLib_DIR - path to STM32F10x Standard Peripherals Library '''default''': /opt/STM32F10x_StdPeriph_Lib_V3.5.0
 * STM32F2_StdPeriphLib_DIR - path to STM32F2xx Standard Peripherals Library '''default''': /opt/STM32F2xx_StdPeriph_Lib_V1.1.0
 * STM32F4_StdPeriphLib_DIR - path to STM32F4 DSP and Standard Peripherals Library '''default''': /opt/STM32F4xx_DSP_StdPeriph_Lib_V1.3.0
@@ -38,12 +40,13 @@ In cmsis folder:
 In stdperiph folder
  cmake -DCMAKE_TOOLCHAIN_FILE=../gcc_stm32.cmake -DCMAKE_MODULE_PATH=<path_to_cmake_folder_of_this_project>/Modules -DSTM32_FAMILY=F1 -DCMAKE_INSTALL_PREFIX=<path_to_toolchain>/arm-none-eabi/ -DCMAKE_BUILD_TYPE=Release
  make && make install
+'''Note:''' For building for STM32F0 family, change -DSTM32_FAMILY=F1 to -DSTM32_FAMILY=F0
 '''Note:''' For building for STM32F2 family, change -DSTM32_FAMILY=F1 to -DSTM32_FAMILY=F2
 '''Note:''' For building for STM32F4 family, change -DSTM32_FAMILY=F1 to -DSTM32_FAMILY=F4
 
 '''Note:''' You can use different CMAKE_INSTALL_PREFIX, but than you'll have to configure cmake search paths when using cmake modules. You may specify an additional search path with -DEXTRA_FIND_PATH=<path-to-search>
 
-'''Note:''' To prevent header collision file "misc.h" from Standard Peripherals Library will be installed as stm32f10x_misc.h / stm32f2xx_misc.h / stm32f4xx_misc.h
+'''Note:''' To prevent header collision file "misc.h" from Standard Peripherals Library will be installed as stm32f0xx_misc.h / stm32f10x_misc.h / stm32f2xx_misc.h / stm32f4xx_misc.h
 
 == Usage ==
 After building you need to copy cmake modules in cmake's modules path, or just set CMAKE_MODULE_PATH in project. 
@@ -89,3 +92,30 @@ Next cmake variables are useful for linker tuning:
 * STM32_SET_FLASH_PARAMS(TARGET ...) - sets chip flash/ram parameters for targer.
 * STM32_SET_TARGET_PROPERTIES(TARGET) - sets all needed parameters and compiler flags for target. 
 * STM32_GENERATE_LIBRARIES(NAME SOURCES LIBRARIES) - generates libraries for all chip types in family. Resulting libraries stored in LIBRARIES and have names in ${NAME}_${FAMILY}_${CHIP_TYPE} format.
+
+=== Notes about using this package under Windows ===
+
+This package is successfully used to build STM32 applications under Windows using freely available Sourcery_CodeBench_Lite_for_ARM_EABI toolchain. The recommended setup is:
+
+* Install [Sourcery_Codebench_Lite http://www.mentor.com/embedded-software/sourcery-tools/sourcery-codebench/overview]
+* Install minimal MinGW to have properly functioning 'make.exe'
+* Prepare initial CMake cache contents ''build_settings'' setting paths proper for your installation:
+{{{
+SET(CMAKE_MAKE_PROGRAM c:/MinGW/bin/mingw32-make.exe CACHE FILEPATH "Make program")
+SET(CMAKE_TOOLCHAIN_FILE d:/Projects/lib/stm32-cmake/gcc_stm32.cmake CACHE FILEPATH "Toolchain file")
+SET(TOOLCHAIN_PREFIX "c:/MentorGraphics/Sourcery_CodeBench_Lite_for_ARM_EABI" CACHE PATH "Toolchain prefix")
+
+SET(STM32_CHIP "STM32F030R8" CACHE STRING "stm32 chip")
+
+SET(STM32F2_StdPeriphLib_DIR "d:/Projects/lib/STM32F2xx_StdPeriph_Lib_V1.1.0" CACHE PATH "StdPeriph path")
+SET(STM32F0_StdPeriphLib_DIR "d:/Projects/lib/STM32F0xx_StdPeriph_Lib_V1.3.1" CACHE PATH "StdPeriph path")
+
+SET(CMAKE_INSTALL_PREFIX "d:/Projects/lib/bin" CACHE PATH "Install prefix")
+SET(CMAKE_MODULE_PATH "d:/Projects/lib/stm32-cmake/cmake/Modules" CACHE PATH "CMake modules path")
+SET(EXTRA_FIND_PATH "${CMAKE_INSTALL_PREFIX}" CACHE PATH "Build root path")
+SET(CMAKE_ECLIPSE_VERSION "4.3" CACHE STRING "Eclipse version")
+}}}
+* And now you go (again, use proper paths):
+{{{
+"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -G "Eclipse CDT4 - MinGW Makefiles" -C ../../build/build_settings -DCMAKE_BUILD_TYPE=Debug ../source/
+}}}
