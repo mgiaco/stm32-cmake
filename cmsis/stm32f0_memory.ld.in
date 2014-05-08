@@ -1,0 +1,6 @@
+/* Specify the memory areas */
+MEMORY
+{
+  FLASH (rx)      : ORIGIN = ${STM32_FLASH_ORIGIN}, LENGTH = ${STM32_FLASH_SIZE}
+  RAM (xrw)       : ORIGIN = ${STM32_RAM_ORIGIN}, LENGTH = ${STM32_RAM_SIZE}
+}

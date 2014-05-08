@@ -15,7 +15,6 @@ IF(${STM32_FAMILY} STREQUAL "F0")
         ${STM32_CMSIS_PATH_F0}/Device/ST/STM32F0xx/Source/Templates/system_stm32f0xx.c
     )
     SET(STARTUP_PREFIX ${STM32_CMSIS_PATH_F0}/Device/ST/STM32F0xx/Source/Templates/gcc_ride7/startup_stm32f)
-    SET(CMSIS_LINKER_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/stm32f0_flash.ld.in)
     
 ELSEIF(${STM32_FAMILY} STREQUAL "F1")
     
@@ -23,7 +22,6 @@ ELSEIF(${STM32_FAMILY} STREQUAL "F1")
         ${STM32_CMSIS_PATH_F1}/CM3/DeviceSupport/ST/STM32F10x/system_stm32f10x.c
     )
     SET(STARTUP_PREFIX ${STM32_CMSIS_PATH_F1}/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_)
-    SET(CMSIS_LINKER_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/stm32f1_flash.ld.in)
     
 ELSEIF(${STM32_FAMILY} STREQUAL "F2")
     
@@ -31,7 +29,6 @@ ELSEIF(${STM32_FAMILY} STREQUAL "F2")
         ${STM32_CMSIS_PATH_F2}/Device/ST/STM32F2xx/Source/Templates/system_stm32f2xx.c
     )
     SET(STARTUP_PREFIX ${STM32_CMSIS_PATH_F2}/Device/ST/STM32F2xx/Source/Templates/gcc_ride7/startup_stm32f)
-    SET(CMSIS_LINKER_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/stm32f2_flash.ld.in)
 
 ELSEIF(${STM32_FAMILY} STREQUAL "F4")
     
@@ -39,9 +36,16 @@ ELSEIF(${STM32_FAMILY} STREQUAL "F4")
         ${STM32_CMSIS_PATH_F4}/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
     )
     SET(STARTUP_PREFIX ${STM32_CMSIS_PATH_F2}/Device/ST/STM32F4xx/Source/Templates/gcc_ride7/startup_stm32f)
-    SET(CMSIS_LINKER_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/stm32f4_flash.ld.in)
     
 ENDIF()
+
+LIST(APPEND CMSIS_SOURCES stm32fx_sys.c)
+
+SET(CMSIS_LINKER_SCRIPT 
+    ${CMAKE_CURRENT_SOURCE_DIR}/stm32${STM32_FAMILY_LOWER}_memory.ld.in
+    ${CMAKE_CURRENT_SOURCE_DIR}/stm32${STM32_FAMILY_LOWER}_sections.ld.in
+    ${CMAKE_CURRENT_SOURCE_DIR}/stm32fx_flash.ld.in
+)
 
 INCLUDE_DIRECTORIES(
     ${CMAKE_CURRENT_SOURCE_DIR}
