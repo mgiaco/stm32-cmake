@@ -99,6 +99,7 @@ ELSEIF(${STM32_FAMILY} STREQUAL "F2")
         ${STDPERIPH_SOURCE_DIR}/stm32f2xx_dma.c
         ${STDPERIPH_SOURCE_DIR}/stm32f2xx_exti.c
         ${STDPERIPH_SOURCE_DIR}/stm32f2xx_flash.c
+        ${STDPERIPH_SOURCE_DIR}/stm32f2xx_fsmc.c
         ${STDPERIPH_SOURCE_DIR}/stm32f2xx_gpio.c
         ${STDPERIPH_SOURCE_DIR}/stm32f2xx_hash.c
         ${STDPERIPH_SOURCE_DIR}/stm32f2xx_hash_md5.c
