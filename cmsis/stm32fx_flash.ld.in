@@ -1,4 +1,4 @@
-INCLUDE ${TARGET}_stm32${STM32_FAMILY_LOWER}_memory.ld
+INCLUDE ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}_stm32${STM32_FAMILY_LOWER}_memory.ld
 
 /* Entry Point */
 ENTRY(Reset_Handler)
@@ -126,7 +126,7 @@ SECTIONS
         _ebss = ABSOLUTE(.);
     } >RAM
 
-    INCLUDE ${TARGET}_stm32${STM32_FAMILY_LOWER}_sections.ld
+    INCLUDE ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}_stm32${STM32_FAMILY_LOWER}_sections.ld
     
     ._usrheap (COPY): 
     {
