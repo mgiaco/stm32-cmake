@@ -1,0 +1,10 @@
+# how to build windows cmd´s
+
+mkdir build
+cd build
+cmake.exe -G "MinGW Makefiles" -C ../../build_settings.cmake -DCMAKE_BUILD_TYPE=Debug ../
+make
+make install
+
+
+# or use fabric with the fabile
