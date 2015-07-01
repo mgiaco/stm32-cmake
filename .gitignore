@@ -1,0 +1,8 @@
+/stm_libs
+/bin
+/cmsis/build
+/stdperiph/build
+/.project
+/stm32-blinky/.cproject
+/stm32-blinky/.project
+/stm32-blinky/.settings/language.settings.xml
